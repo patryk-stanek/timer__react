@@ -19,21 +19,21 @@ function pad0(value) {
 var Timer = function (_React$Component) {
     _inherits(Timer, _React$Component);
 
-    function Timer(display) {
+    function Timer() {
         _classCallCheck(this, Timer);
-
-        // this.state = {
-        //     minutes: 0,
-        //     seconds: 0,
-        //     miliseconds: 0
-        // }
 
         var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this));
 
+        _this.state = {
+            timer: {
+                minutes: 0,
+                seconds: 0,
+                miliseconds: 0
+            }
+        };
+
         _this.running = false;
-        _this.display = display;
         _this.reset();
-        _this.print(_this.times);
 
         _this.start = _this.start.bind(_this);
         _this.stop = _this.stop.bind(_this);
@@ -63,31 +63,24 @@ var Timer = function (_React$Component) {
                     return _this2.step();
                 }, 10);
             }
-
-            console.log('start');
-            console.log(this.format(this.times));
         }
     }, {
         key: 'stop',
         value: function stop() {
             this.running = false;
             clearInterval(this.watch);
-
-            console.log('stop');
-            console.log(this.format(this.times));
         }
     }, {
         key: 'clear',
         value: function clear() {
             this.reset();
-            // this.display.innerText = this.format(this.times);
-
-            console.log(this.watch);
-        }
-    }, {
-        key: 'print',
-        value: function print() {
-            // this.display.innerText = this.format(this.times);
+            this.setState({
+                timer: {
+                    minutes: 0,
+                    seconds: 0,
+                    miliseconds: 0
+                }
+            });
         }
     }, {
         key: 'calculate',
@@ -101,6 +94,13 @@ var Timer = function (_React$Component) {
                 this.times.minutes += 1;
                 this.times.seconds = 0;
             }
+            this.setState({
+                timer: {
+                    minutes: this.times.minutes,
+                    seconds: this.times.seconds,
+                    miliseconds: this.times.miliseconds
+                }
+            });
         }
     }, {
         key: 'format',
@@ -112,7 +112,6 @@ var Timer = function (_React$Component) {
         value: function step() {
             if (!this.running) return;
             this.calculate();
-            this.print();
         }
     }, {
         key: 'save',
@@ -167,7 +166,7 @@ var Timer = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'stopwatch' },
-                    this.format(this.times)
+                    this.format(this.state.timer)
                 ),
                 React.createElement('ul', { id: 'results' })
             );

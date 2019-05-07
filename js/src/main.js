@@ -8,19 +8,19 @@ function pad0(value) {
 
 class Timer extends React.Component {
 
-    constructor(display) {
+    constructor() {
         super()
 
-        // this.state = {
-        //     minutes: 0,
-        //     seconds: 0,
-        //     miliseconds: 0
-        // }
+        this.state = {
+            timer: {
+                minutes: 0,
+                seconds: 0,
+                miliseconds: 0
+            }
+        }
 
         this.running = false;
-        this.display = display;
         this.reset();
-        this.print(this.times);
 
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
@@ -42,28 +42,22 @@ class Timer extends React.Component {
             this.running = true;
             this.watch = setInterval(() => this.step(), 10);
         }
-
-        console.log('start')
-        console.log(this.format(this.times));
     }
 
     stop() {
         this.running = false;
         clearInterval(this.watch);
-        
-        console.log('stop');
-        console.log(this.format(this.times));
     }
 
     clear() {
         this.reset();
-        // this.display.innerText = this.format(this.times);
-        
-        console.log(this.watch);
-    }
-
-    print() {
-        // this.display.innerText = this.format(this.times);
+        this.setState({
+            timer: {
+                minutes: 0,
+                seconds: 0,
+                miliseconds: 0
+            }
+        })
     }
 
     calculate() {
@@ -76,6 +70,13 @@ class Timer extends React.Component {
             this.times.minutes += 1;
             this.times.seconds = 0;
         }
+        this.setState({
+            timer: {
+                minutes: this.times.minutes,
+                seconds: this.times.seconds,
+                miliseconds: this.times.miliseconds
+            }
+        })
     }
 
     format(times) {
@@ -85,7 +86,6 @@ class Timer extends React.Component {
     step() {
         if (!this.running) return;
         this.calculate();
-        this.print();
     }
 
     save() {
@@ -111,7 +111,7 @@ class Timer extends React.Component {
                     <a href="#" className="button" id="save" onClick={this.save}><i className="fas fa-save"></i></a>
                     <a href="#" className="button" id="refresh" onClick={this.clearTimes}><i className="fas fa-broom"></i></a>
                 </nav>
-                <div className="stopwatch">{this.format(this.times)}</div>
+                <div className="stopwatch">{this.format(this.state.timer)}</div>
                 <ul id="results"></ul>
             </div>
         )
