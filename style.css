@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-image: linear-gradient(to bottom right, aqua, blue);
+    height: 100vh;
+    width: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: 100;
+    position: relative;
+}
+
+.controls {
+    text-align: center;
+}
+
+.button {
+    color: white;
+    margin: 10px 25px;
+    text-decoration: none;
+    font-size: 50px;
+    display: inline-block;
+}
+
+.stopwatch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 50px;
+}
+
+#results {
+    padding-top: 10px;
+    position: absolute;
+    font-size: 25px;
+    text-align: center;
+}
+
+#results li {
+    list-style: none;
+}
